@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wechat_mall_goods_view_tree" model="ir.ui.view">
+            <field name="name">wechat_mall.goods.view_tree</field>
+            <field name="model">wechat_mall.goods</field>
+            <field name="arch" type="xml">
+                <tree string="商品">
+                    <field name="id" string="商品编号"/>
+                    <field name="subshop_id" groups="base.group_system"/>
+                    <field name="category_id"/>
+                    <field name="name"/>
+                    <field name="display_pic"/>
+                    <field name="status"/>
+                    <field name="recommend_status"/>
+                    <field name="stores"/>
+                    <field name="original_price" string="价格"/>
+                    <field name="min_price" invisible="1"/>
+                    <field name="views"/>
+                    <field name="number_fav" invisible="1"/>
+                    <field name="number_order"/>
+                    <field name="number_good_reputation" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="wechat_mall_goods_view_form" model="ir.ui.view">
+            <field name="name">wechat_mall.goods.view_form</field>
+            <field name="model">wechat_mall.goods</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="商品" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id" domain="[('create_uid', '=', uid)]"/>
+                            <field name="subshop_id" domain="[('create_uid', '=', uid)]" groups="base.group_system"/>
+                            <field name="status"/>
+                            <field name="recommend_status"/>
+                            <field name="logistics_id" domain="[('create_uid', '=', uid)]"/>
+                            <field name="logistics_valuation_type" invisible="1"/>
+                            <field name="property_ids" domain="[('create_uid', '=', uid)]">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="child_ids">
+                                        <tree editable="button">
+                                            <field name="name"/>
+                                            <field name="sort"/>
+                                            <field name="remark"/>
+                                        </tree>
+                                        <form>
+                                            <field name="name"/>
+                                            <field name="sort"/>
+                                            <field name="remark"/>
+                                        </form>
+                                    </field>
+                                    <field name="sort"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="sort"/>
+                                        <field name="child_ids">
+                                            <tree editable="button">
+                                                <field name="name"/>
+                                                <field name="sort"/>
+                                                <field name="remark"/>
+                                            </tree>
+                                            <form>
+                                                <field name="name"/>
+                                                <field name="sort"/>
+                                                <field name="remark"/>
+                                            </form>
+                                        </field>
+                                    </group>
+                                </form>
+                            </field>
+                            <field name="price_ids" attrs="{'invisible': [('price_ids', '=', [])]}">
+                                <tree editable="button" create="false" delete="false">
+                                    <field name="name"/>
+                                    <field name="original_price" invisible="1"/>
+                                    <field name="price" string="价格"/>
+                                    <field name="stores"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name" string="规格名称"/>
+                                        <field name="original_price" string="原价" invisible="1"/>
+                                        <field name="price" string="价格"/>
+                                        <field name="stores" string="库存"/>
+                                    </group>
+                                </form>
+                            </field>
+                            <field name="original_price" string="价格"/>
+                            <field name="stores"/>
+                            <field name="min_price" invisible="1"/>
+                            <field name="weight"
+                                   attrs="{'invisible': [('logistics_valuation_type', '!=', 'by_weight')]}"/>
+                            <field name="display_pic" attrs="{'invisible': [('cover_pic', '=', False)]}"/>
+                            <field name="cover_pic"/>
+                            <field name="display_all_pic" attrs="{'invisible': [('pic', '=', [])]}"/>
+                            <field name="pic" domain="[('create_uid', '=', uid)]">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="datas" filename="datas_fname"
+                                           attrs="{'invisible':[('type','=','url')]}"/>
+                                    <field name="datas_fname" invisible="1" attrs="{'invisible':[('type','=','url')]}"
+                                           class="oe_inline oe_right"/>
+                                    <field name="url" widget="url" attrs="{'invisible':[('type','=','binary')]}"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="type"/>
+                                        <field name="datas" filename="datas_fname"
+                                               attrs="{'invisible':[('type','=','url')]}"/>
+                                        <field name="datas_fname" invisible="1"
+                                               attrs="{'invisible':[('type','=','url')]}" class="oe_inline oe_right"/>
+                                        <field name="url" widget="url" attrs="{'invisible':[('type','=','binary')]}"/>
+                                    </group>
+                                </form>
+                            </field>
+                            <field name="characteristic"/>
+                            <field name="content"/>
+                            <field name="views" readonly="1"/>
+                            <field name="number_fav" readonly="1" invisible="1"/>
+                            <field name="number_good_reputation" readonly="1" invisible="1"/>
+                            <field name="number_order"/>
+                            <field name="sort"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="wechat_mall_goods_property_view_tree" model="ir.ui.view">
+            <field name="name">wechat_mall.goods.property.view_tree</field>
+            <field name="model">wechat_mall.goods.property</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="商品规格">
+                    <field name="name"/>
+                    <field name="child_ids"/>
+                    <field name="sort"/>
+                </tree>
+            </field>
+        </record>
+        <record id="wechat_mall_goods_property_view_form" model="ir.ui.view">
+            <field name="name">wechat_mall.goods.property.view_form</field>
+            <field name="model">wechat_mall.goods.property</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="商品规格">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="sort"/>
+                            <field name="child_ids" domain="[('create_uid', '=', uid)]">
+                                <tree editable='bottom'>
+                                    <field name="name"/>
+                                    <field name="sort"/>
+                                    <field name="remark"/>
+                                </tree>
+                                <form>
+                                    <field name="name"/>
+                                    <field name="sort"/>
+                                    <field name="remark"/>
+                                </form>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="wechat_mall_goods_action_87" model="ir.actions.act_window">
+            <field name="name">商品</field>
+            <field name="res_model">wechat_mall.goods</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[('create_uid', '=', uid)]</field>
+        </record>
+        <record id="wechat_mall_goods_property_action_1" model="ir.actions.act_window">
+            <field name="name">商品规格</field>
+            <field name="res_model">wechat_mall.goods.property</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[('create_uid', '=', uid)]</field>
+        </record>
+
+        <menuitem action="wechat_mall_goods_action_87" id="wechat_mall_goods_menuitem_75" name="商品"
+                  parent="parent_menu_wechat_mall" sequence="3" groups="wechat_mall.group_wechat_mall_user"/>
+        <menuitem action="wechat_mall_goods_property_action_1" id="wechat_mall_goods_property_menuitem_1" name="商品规格"
+                  parent="parent_menu_wechat_mall" sequence="4" groups="wechat_mall.group_wechat_mall_user"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wechat_mall_banner_view_tree" model="ir.ui.view">
+            <field name="name">wechat_mall.banner.view_tree</field>
+            <field name="model">wechat_mall.banner</field>
+            <field name="arch" type="xml">
+                <tree string="横幅">
+                    <field name="id" string="编号"/>
+                    <field name="title"/>
+                    <field name="business_id"/>
+                    <field name="status"/>
+                    <field name="create_date" string="添加时间"/>
+                    <field name="write_date" string="修改时间"/>
+                </tree>
+            </field>
+        </record>
+        <record id="wechat_mall_banner_view_form" model="ir.ui.view">
+            <field name="name">wechat_mall.banner.view_form</field>
+            <field name="model">wechat_mall.banner</field>
+            <field name="arch" type="xml">
+                <form string="横幅" version="7.0" duplicate="0">
+                    <sheet>
+                        <group>
+                            <field name="title"/>
+                            <field name="business_id"/>
+                            <field string="图片预览" name="display_pic" attrs="{'invisible':[('pic','=',False)]}"/>
+                            <field name="pic" domain="[('create_uid', '=', uid)]"/>
+                            <field name="remark"/>
+                            <field name="status"/>
+                            <field name="sort"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="wechat_mall_banner_action_82" model="ir.actions.act_window">
+            <field name="name">横幅</field>
+            <field name="res_model">wechat_mall.banner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[('create_uid', '=', uid)]</field>
+        </record>
+
+        <menuitem action="wechat_mall_banner_action_82" id="wechat_mall_banner_menuitem_70" name="横幅"
+                  parent="parent_menu_wechat_mall" sequence="0" groups="wechat_mall.group_wechat_mall_user"/>
+
+    </data>
+</odoo>
