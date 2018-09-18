@@ -1,0 +1,1 @@
+# wechat_mall_odoo
